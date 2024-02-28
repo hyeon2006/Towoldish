@@ -78,7 +78,34 @@
             }
         })
     });
+
 </script>
+
+<script>
+    function getCookie(cname) {
+      let name = cname + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for(let i = 0; i <ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const savedRating = getCookie("rating");
+      if (savedRating) {
+        document.querySelector('input[name="rating"][value="' + savedRating + '"]').checked = true;
+      }
+    });
+  </script>
+
   <style>
  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gasoek+One&family=Hahmlet:wght@100..900&display=swap');
 
@@ -170,15 +197,6 @@ html{
 }
 </style>
 
-<script>
-  $star = request.getParameter("rating");
-  if($star > 0 ){$("star5").append("&#9733")}
-  if($star > 1){$("star4").append("&#9733")} 
-  if($star > 2){$("star3").append("&#9733")} 
-  if($star > 3){$("star2").append("&#9733")} 
-  if($star > 4){$("star1").append("&#9733")} 
-</script>
-      
 <style>
 
 .star-rating {
@@ -190,48 +208,23 @@ html{
   text-align:center;
   width:5em;
   margin: auto;
+  color:#f90;
 }
 
 </style>
 
 <style>
+    .average {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: "Noto Sans KR", sans-serif;
+      font-size: 20px; /* 여기에서 font-size 값을 변경 */
+      justify-content: center;
+    }
+  </style>
 
-  .star1{
-  text-align : center;
-  font-size: 1.5em;
-  margin: auto;
-  color:#f90;
-  }
-
-  .star2{
-  text-align:center;
-  font-size:1.5em;
-  margin: auto;
-  color:#f90;
-  } 
-
-  .star3{
-  text-align:center;
-  font-size:1.5em;
-  margin: auto;
-  color:#f90;
-  } 
-
-  .star4{
-  text-align:center;
-  font-size:1.5em;
-  margin: auto;
-  color:#f90;
-  } 
-
-  .star5{
-  text-align:center;
-  font-size:1.5em;
-  margin: auto;
-  color:#f90;
-}
-  
-</style>
+   <script src="average.js" defer></script>
 
  </head>   
  <body> 
@@ -246,12 +239,25 @@ html{
     석식</h1> 
   <p class="break"></p>
   <div class="star-rating">
-       <span id="star1" class="star1"></span>
-       <span id="star2" class="star2"></span> 
-       <span id="star3" class="star3"></span> 
-       <span id="star4" class="star4"></span> 
-       <span id="star5" class="star5"></span>
-  </div>
+    <script>
+
+     const urlParams = new URLSearchParams(window.location.search);
+    const rating = parseInt(urlParams.get('rating'));
+
+      let stars = '';
+      for (let i = 0; i < rating; i++) {
+          stars += '&#9733;'; // 별 이모티콘
+      }
+    
+      document.querySelector(".star-rating").innerHTML = `${stars}`;
+
+</script>
+</div>
+
+<p class=average>평균 평점: <span id="rating"></span></p>
+<p class=average id="averageRating"></p>
+
   <p class="asdf">제작자 : nh / sh
  </body>
 </html>
+  

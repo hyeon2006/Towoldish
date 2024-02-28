@@ -4,6 +4,7 @@
  <head> 
   <meta charset="UTF-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
   <title>토월고 급식</title> 
   <script>
@@ -78,6 +79,7 @@
             }
         })
     });
+    
 </script>
   <style>
  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gasoek+One&family=Hahmlet:wght@100..900&display=swap');
@@ -205,8 +207,40 @@ html{
   text-align:center;
 }
 
+.container {
+        display: flex;
+        justify-content: center;
+      }
+
+      .button {
+        display: inline-block;
+        padding: 10px 15px;
+        margin: 10px 0;
+        border-radius: 50px;
+        background-color: #add8e6; /* 여기에서 background-color 값을 연한 하늘색(light blue)으로 변경 */
+        color: #000; /* 여기에서 color 값을 검은색(black)으로 변경 */
+        font-family: "Noto Sans KR", sans-serif;
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+
+      .button:hover {
+        background-color: #87ceeb; /* 여기에서 background-color 값을 연한 하늘색(light blue)으로 변경 */
+      }
+
+      .button input[type="submit"] {
+        border: none;
+        background-color: transparent;
+        color: inherit;
+        font-size: inherit;
+        cursor: pointer;
+      }
 
 </style>
+
 
  </head>   
  <body> 
@@ -222,7 +256,7 @@ html{
   <p class="break"></p>
 
   
-  <form action="rating" method="get">
+  <form name="rating" method="Get" action="rating.html">
 
     <div class="star-rating">
       <input type="radio" id="5-stars" name="rating" value="5" />
@@ -237,11 +271,54 @@ html{
       <label for="1-star" class="star">&#9733;</label>
      
     </div>
-    <div class="button">
-      <input type='submit' value='전송'>
-      </div>
-    </form>
+    <div class="container">
+        <div class="button">
+          <input type='submit' value='전송'>
+        </div>
+    </div>
+        
     
+    <script>
+        function setCookie(cname, cvalue) {
+          const d = new Date();
+          d.setHours(0, 0, 0, 0);
+          d.setDate(d.getDate() + 1);
+          let expires = "expires="+ d.toUTCString();
+          document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+  
+        document.addEventListener("DOMContentLoaded", function() {
+          const savedRating = getCookie("rating");
+          if (savedRating) {
+            document.querySelector('input[name="rating"][value="' + savedRating + '"]').checked = true;
+            setTimeout(function() {
+              document.querySelector("form").submit();
+            }, 1);
+          }
+        });
+  
+        document.querySelector("form").addEventListener("submit", function(event) {
+          const ratingValue = document.querySelector('input[name="rating"]:checked').value;
+          setCookie("rating", ratingValue);
+        });
+  
+        function getCookie(cname) {
+          let name = cname + "=";
+          let decodedCookie = decodeURIComponent(document.cookie);
+          let ca = decodedCookie.split(';');
+          for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+            }
+          }
+          return "";
+        }
+      </script>
+
   <p class="asdf">제작자 : nh / sh
  </body>
 </html>
