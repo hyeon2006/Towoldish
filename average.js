@@ -1,5 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cron = require('cron');
+
 const app = express();
+app.use(bodyParser.json());
 
 let ratings = [];
 
@@ -9,11 +13,17 @@ app.get('/average', (req, res) => {
   res.json({ average });
 });
 
-app.post('/rating', (req, res) => {
-  const rating = req.body.rating;
+app.get('/rating', (req, res) => {
+  const rating = req.query.rating;
   ratings.push(rating);
   res.sendStatus(200);
 });
+
+const initializeAverage = () => {
+  ratings = [];
+};
+
+cron.schedule('0 0 * * *', initializeAverage);
 
 app.listen(80, () => {
   console.log('Server listening on port 80');
