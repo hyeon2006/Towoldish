@@ -178,6 +178,19 @@ html{
   <h1 class="sub1">
     중식</h1> 
   <p class="meal"></p>
+  
+  <div class="star-ratings">
+	<div 
+    class="star-ratings-fill space-x-2 text-lg"
+    :style="{ width: ratingToPercent + '%' }"
+	>
+		<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+	</div>
+	<div class="star-ratings-base space-x-2 text-lg">
+		<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+	</div>
+</div>
+  
   <h1 class="sub2">
     석식</h1> 
   <p class="break"></p>
