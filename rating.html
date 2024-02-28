@@ -172,18 +172,11 @@ html{
 
 <script>
   $star = request.getParameter("rating");
-  $1star = "&#9733";
-  $2star = "&#9733";
-  $3star = "&#9733";
-  $4star = "&#9733";
-  $5star = "&#9733";
-
-      </script>
+</script>
       
 <style>
 
 .star-rating {
-  border:solid 1px #ccc;
   display:flex;
   flex-direction: row-reverse;
   font-size:1.5em;
@@ -196,10 +189,44 @@ html{
 
 </style>
 
+<style>
+  .star1{
+  text-align : center;
+  font-size: 1.5em;
+  margin: auto;   
+  width: auto;
+  height: auto;
+  }
+
+  .star2{
+  text-align:center;
+  font-size:1.5em;
+  margin: auto;
+  } 
+
+  .star3{
+  text-align:center;
+  font-size:1.5em;
+  margin: auto;
+  } 
+
+  .star4{
+  text-align:center;
+  font-size:1.5em;
+  margin: auto;
+  } 
+
+  .star5{
+  text-align:center;
+  font-size:1.5em;
+  margin: auto;
+  }
+</style>
+
 <script>
 if($star > 0 ) { 
   
-  $(".1star").css({
+  $(".star1").css({
 
     "color" : "#f90" ,
    "text-align" : "center",
@@ -209,44 +236,41 @@ if($star > 0 ) {
 
 if($star > 1 ) { 
   
-  $(".2star").css({
+  $(".star2").css({
 
     "color" : "#f90" ,
-   "text-align" : "center",
                     
   });
 }
 if($star > 2 ) { 
   
-  $(".3star").css({
+  $(".star3").css({
 
     "color" : "#f90" ,
-   "text-align" : "center",
                     
   });
 
 }
 if($star > 3 ) { 
   
-  $(".4star").css({
+  $(".star4").css({
 
     "color" : "#f90" ,
-   "text-align" : "center",
                     
   });
 
 }
 if($star > 4 ) { 
   
-  $(".5star").css({
+  $(".star5").css({
 
     "color" : "#f90" ,
-   "text-align" : "center",
                     
   });
 }
 
 </script>
+
 
  </head>   
  <body> 
@@ -260,11 +284,13 @@ if($star > 4 ) {
   <h1 class="sub2">
     석식</h1> 
   <p class="break"></p>
-    
   <div class="star-rating">
-       <span class="1star"></span> <span class="12tar"></span> <span class="3star"></span> <span class="4star"></span> <span class="5star"></span>
+       <span class="star1">&#9733</span>
+       <span class="star2">&#9733</span> 
+       <span class="star3">&#9733</span> 
+       <span class="star4">&#9733</span> 
+       <span class="star5">&#9733</span>
   </div>
-
   <p class="asdf">제작자 : nh / sh
  </body>
 </html>
