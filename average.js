@@ -21,9 +21,12 @@ if (window.location.pathname === '/rating.html') {
 const sum = ratings.reduce((total, rating) => total + rating, 0);
 const average = sum / ratings.length;
 
+// 평균 값을 localStorage에 추가합니다.
+localStorage.setItem('average', average);
+
 // 평균 값을 rating.html의 averageRating 요소에 추가합니다.
 const avgElement = document.createElement('p');
-avgElement.textContent = `평균 별점: ${average.toFixed(2)}`;
+avgElement.textContent = `평균 별점: ${localStorage.getItem('average')}`;
 document.getElementById('averageRating').textContent = avgElement.textContent;
 
 // 초기화 기준일자와 현재 일자를 비교하여 별점과 평균 값을 초기화합니다.
@@ -37,7 +40,3 @@ if (currentTime > initialTime) {
     localStorage.setItem('initialDate', currentTime);
     localStorage.setItem('average', 0);
 }
-
-// 평균 값을 localStorage에 추가합니다.
-const averageValue = parseFloat(localStorage.getItem('average')) || 0;
-document.getElementById('averageRating').textContent = `평균 별점: ${averageValue.toFixed(2)}`;
