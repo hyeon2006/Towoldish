@@ -224,9 +224,21 @@ html{
     }
   </style>
 
-<script src="http://towol.n-e.kr/average.js" defer></script>
+<div id="averageRating"></div>
 
- </head>   
+ </head>  
+ 
+ <script>
+    // jQuery를 사용하여 average.js 스크립트를 비동기적으로 로드합니다.
+    $.getScript('average.js', function() {
+      // average.js에서 정의한 전역 변수에서 평균 평가 값을 검색합니다.
+      const averageRating = average;
+      
+      // #averageRating 요소에 평균 평가 값을 표시합니다.
+      $('#averageRating').text(`평균 평가: ${averageRating}`);
+    });
+  </script>
+
  <body> 
   <h1 class="title">
     <img src="https://i.imgur.com/VfyCCt0.png" width="75"> 토월급식</토월고></h1> 
@@ -258,5 +270,6 @@ html{
 
   <p class="asdf">제작자 : nh / sh
  </body>
+
 </html>
   
