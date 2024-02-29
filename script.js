@@ -1,28 +1,14 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
+let ratings = []; // 서버 측 배열 선언
 
-app.use(bodyParser.json());
-
-// 배열 초기화
-let ratings = [];
-
-// 클라이언트로부터 평가 값을 받아 배열에 추가
-app.post('script.js', (req, res) => {
-    const { rating } = req.body;
-    ratings.push(rating);
-    res.send('평가가 성공적으로 추가되었습니다.');
-});
-
-// 배열의 평균값을 계산하는 엔드포인트
-app.get('/averageRating', (req, res) => {
-    const sum = ratings.reduce((acc, curr) => acc + curr, 0);
-    const average = sum / ratings.length;
-    res.send(`평균 평가 점수: ${average}`);
+app.get('/save_rating', (req, res) => {
+  const rating = req.query.rating;
+  ratings.push(rating); // 배열에 값 추가
+  console.log(`Received rating: ${rating}`);
+  res.send('Rating saved.');
 });
 
 app.listen(3000, () => {
-    console.log('서버가 포트 3000에서 실행 중입니다.');
+  console.log('Server listening on port 3000');
 });
-
-document.getElementById('output').innerText = average;

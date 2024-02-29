@@ -260,7 +260,7 @@ html{
   <p class="break"></p>
 
   
-  <form id="ratingForm" name="rating" method="get" action="rating.html">
+  <form id="ratingForm" name="rating">
 
     <div class="star-rating">
       <input type="radio" id="5-stars" name="rating" value="5" />
@@ -283,6 +283,54 @@ html{
         </div>
     </div>
   </form>
+
+  <script>
+    $(document).ready(function() {
+      // Add a submit event listener to the rating form
+      $('#ratingForm').submit(function(event) {
+        // Prevent the form from being submitted in the traditional way
+        event.preventDefault();
+    
+        // Check if a rating is selected
+        const rating = $('input[name="rating"]:checked').val();
+        if (rating) {
+          // Send the rating data to both "rating.html" and "save_rating.php" using AJAX requests
+          $.ajax({
+            url: 'rating.html',
+            type: 'get',
+            data: { rating: rating },
+            success: function(data) {
+              // Handle the success response from "rating.html"
+              console.log('Rating sent to rating.html:', data);
+            },
+            error: function() {
+              console.error('Error sending rating to rating.html');
+            }
+          });
+    
+          $.ajax({
+            url: 'save_rating.php',
+            type: 'get',
+            data: { rating: rating },
+            success: function(data) {
+              // Handle the success response from "save_rating.php"
+              console.log('Rating saved to database:', data);
+            },
+            error: function() {
+              console.error('Error saving rating to database');
+            }
+          });
+    
+          // Show a success message or redirect the user to another page
+          alert('감사합니다. 평가가 완료되었습니다!');
+          window.location.href = 'rating.html';
+        } else {
+          // Show an error message if no rating is selected
+          alert('별을 선택하고 버튼을 눌러주세요!');
+        }
+      });
+    });
+    </script>
 
   <script>
     // 쿠키에 rating 값 저장

@@ -226,95 +226,25 @@ html{
       }
       document.querySelector(".star-rating").innerHTML = `${stars}`;
   
-      function getCookie(cname) {
-          var name = cname + "=";
-          var decodedCookie = decodeURIComponent(document.cookie);
-          var ca = decodedCookie.split(';');
-          for(var i = 0; i < ca.length; i++) {
-              var c = ca[i];
-              while (c.charAt(0) == ' ') {
-                  c = c.substring(1);
-              }
-              if (c.indexOf(name) == 0) {
-                  return c.substring(name.length, c.length);
-              }
-          }
-          return "";
-      }
-    </script>
+     </script>
+     </div>
+<div>
+        <script>
+            // PHP 파일에서 생성된 JSON 데이터를 파싱합니다.
+            var ratings = JSON.parse('<?php echo $json; ?>');
+        
+            // 평균 등급 값을 계산하여 표시합니다.
+            var ratingsDiv = document.getElementById('averageRating');
+            var sum = 0;
+            for (var i = 0; i < ratings.length; i++) {
+                sum += ratings[i];
+            }
+            var avg = sum / ratings.length;
+            ratingsDiv.innerHTML = avg;
+        </script>
 </div>
 
-<script>
-function resetCookie(name) {
-  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-}
-
-function resetCookieAtMidnight() {
-  var now = new Date();
-  var midnight = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 1, // 다음 날 자정
-      0, 0, 0
-  );
-  var timeUntilMidnight = midnight - now;
-  setTimeout(function() {
-      resetCookie('rating'); // 초기화할 쿠키 이름 입력
-      resetCookieAtMidnight(); // 자정마다 계속 초기화
-  }, timeUntilMidnight);
-}
-
-// 페이지가 로드될 때 초기화 함수 실행
-resetCookieAtMidnight();
-
-
-// 서버로 데이터를 전송하는 함수
-function sendDataToServer(data) {
-  fetch('script.js', {
-    method: "post",
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ rating: data })
-})
-.then(response => {
-    if (response.ok) {
-        console.log('평가가 서버에 전송되었습니다.');
-    } else {
-        console.error('서버에 데이터를 전송하는 중 오류가 발생했습니다.');
-    }
-})
-.catch(error => {
-    console.error('네트워크 오류:', error);
-});
-}
-
-// 서버로 데이터 전송
-sendDataToServer(rating);
-
-// 쿠키에서 값을 가져오는 함수
-function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-        }
-    }
-    return "";
-}
-
-
-
-</script>
-
-<script src="script.js" defer></script>
-<div id="output"></div>
+<div id="averageRating"></div>
 
   <p class="asdf">제작자 : nh / sh
  </body>
