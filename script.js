@@ -1,9 +1,3 @@
-module.exports = {
-	"env": {
-		"amd": ture, //require
-		"node": true, //module
-	}
-}
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');

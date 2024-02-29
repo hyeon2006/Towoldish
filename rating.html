@@ -271,7 +271,7 @@ resetCookieAtMidnight();
 // 서버로 데이터를 전송하는 함수
 function sendDataToServer(data) {
   fetch('script.js', {
-    method: 'POST',
+    method: "post",
     headers: {
         'Content-Type': 'application/json'
     },
