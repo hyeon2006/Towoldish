@@ -219,7 +219,7 @@ html{
   <div class="star-rating">
     <script>
       // 쿠키에서 rating 값을 가져와서 별점으로 표시
-      const rating = localStorage.getItem('rating');
+      const rating = getCookie('rating');
       let stars = '';
       for (let i = 0; i < rating; i++) {
           stars += '&#9733;'; // 별 이모티콘
