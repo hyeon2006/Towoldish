@@ -285,67 +285,6 @@ html{
   </form>
 
   <script>
-    $(document).ready(function() {
-      // Add a submit event listener to the rating form
-      $('#ratingForm').submit(function(event) {
-        // Prevent the form from being submitted in the traditional way
-        event.preventDefault();
-    
-        // Check if a rating is selected
-        const rating = $('input[name="rating"]:checked').val();
-        if (rating) {
-          // Send the rating data to both "rating.html" and "save_rating.php" using AJAX requests
-          $.ajax({
-            url: 'rating.html',
-            type: 'get',
-            data: { rating: rating },
-            success: function(data) {
-              // Handle the success response from "rating.html"
-              console.log('Rating sent to rating.html:', data);
-            },
-            error: function() {
-              console.error('Error sending rating to rating.html');
-            }
-          });
-    
-          $.ajax({
-            url: 'save_rating.php',
-            type: 'get',
-            data: { rating: rating },
-            success: function(data) {
-              // Handle the success response from "save_rating.php"
-              console.log('Rating saved to database:', data);
-            },
-            error: function() {
-              console.error('Error saving rating to database');
-            }
-          });
-    
-          // Show a success message or redirect the user to another page
-          alert('감사합니다. 평가가 완료되었습니다!');
-          window.location.href = 'rating.html';
-        } else {
-          // Show an error message if no rating is selected
-          alert('별을 선택하고 버튼을 눌러주세요!');
-        }
-      });
-    });
-    </script>
-
-  <script>
-    // 쿠키에 rating 값 저장
-    function setCookie(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-      var expires = "expires="+d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    // 전송 버튼 클릭 시 평가 값 저장
-    document.querySelector('.button').addEventListener('click', function() {
-      var rating = document.querySelector('input[name="rating"]:checked').value;
-      setCookie('rating', rating, 365); // 쿠키에 rating 값 저장 (유효기간: 365일)
-    });
 
     // 페이지 로드 시 rating 값 확인하여 rating.html로 이동
     window.onload = function() {
@@ -354,6 +293,56 @@ html{
         window.location.href = 'rating.html'; // rating.html 페이지로 이동
       }
     };
+  </script>
+
+<script>
+  $(document).ready(function() {
+    // Add a submit event listener to the rating form
+    $('#ratingForm').submit(function(event) {
+      // Prevent the form from being submitted in the traditional way
+      event.preventDefault();
+  
+      // Check if a rating is selected
+      const rating = $('input[name="rating"]:checked').val();
+      if (rating) {
+        // Send the rating data to both "rating.html" and "save_rating.php" using AJAX requests
+        $.ajax({
+          url: 'rating.html',
+          type: 'get',
+          data: { rating: rating },
+          success: function(data) {
+            // Handle the success response from "rating.html"
+            console.log('Rating sent to rating.html:', data);
+            // Save the rating value to a cookie
+            document.cookie = "rating=" + rating + "; expires=" + new Date(Date.now() + 86400000).toUTCString() + "; path=/";
+          },
+          error: function() {
+            console.error('Error sending rating to rating.html');
+          }
+        });
+  
+        $.ajax({
+          url: 'save_rating.php',
+          type: 'get',
+          data: { rating: rating },
+          success: function(data) {
+            // Handle the success response from "save_rating.php"
+            console.log('Rating saved to database:', data);
+          },
+          error: function() {
+            console.error('Error saving rating to database');
+          }
+        });
+  
+        // Show a success message or redirect the user to another page
+        alert('감사합니다. 평가가 완료되었습니다!');
+        window.location.href = 'rating.html';
+      } else {
+        // Show an error message if no rating is selected
+        alert('별을 선택하고 버튼을 눌러주세요!');
+      }
+    });
+  });
   </script>
 
   <p class="asdf">제작자 : nh / sh
