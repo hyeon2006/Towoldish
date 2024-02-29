@@ -1,21 +1,28 @@
-function resetCookie(name) {
-    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-}
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
 
-function resetCookieAtMidnight() {
-    var now = new Date();
-    var midnight = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        now.getDate() + 1, // 다음 날 자정
-        0, 0, 0
-    );
-    var timeUntilMidnight = midnight - now;
-    setTimeout(function() {
-        resetCookie('rating'); // 초기화할 쿠키 이름 입력
-        resetCookieAtMidnight(); // 자정마다 계속 초기화
-    }, timeUntilMidnight);
-}
+app.use(bodyParser.json());
 
-// 페이지가 로드될 때 초기화 함수 실행
-resetCookieAtMidnight();
+// 배열 초기화
+let ratings = [];
+
+// 클라이언트로부터 평가 값을 받아 배열에 추가
+app.post('/addRating', (req, res) => {
+    const { rating } = req.body;
+    ratings.push(rating);
+    res.send('평가가 성공적으로 추가되었습니다.');
+});
+
+// 배열의 평균값을 계산하는 엔드포인트
+app.get('/averageRating', (req, res) => {
+    const sum = ratings.reduce((acc, curr) => acc + curr, 0);
+    const average = sum / ratings.length;
+    res.send(`평균 평가 점수: ${average}`);
+});
+
+app.listen(3000, () => {
+    console.log('서버가 포트 3000에서 실행 중입니다.');
+});
+
+document.getElementById('output').innerText = average;
