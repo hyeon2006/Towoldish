@@ -81,31 +81,6 @@
 
 </script>
 
-<script>
-    function getCookie(cname) {
-      let name = cname + "=";
-      let decodedCookie = decodeURIComponent(document.cookie);
-      let ca = decodedCookie.split(';');
-      for(let i = 0; i <ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') {
-          c = c.substring(1);
-        }
-        if (c.indexOf(name) == 0) {
-          return c.substring(name.length, c.length);
-        }
-      }
-      return "";
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-      const savedRating = getCookie("rating");
-      if (savedRating) {
-        document.querySelector('input[name="rating"][value="' + savedRating + '"]').checked = true;
-      }
-    });
-  </script>
-
   <style>
  @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gasoek+One&family=Hahmlet:wght@100..900&display=swap');
 
@@ -245,36 +220,31 @@ html{
   <p class="break"></p>
   <div class="star-rating">
     <script>
-
-     const urlParams = new URLSearchParams(window.location.search);
-    const rating = parseInt(urlParams.get('rating'));
-
+      // 쿠키에서 rating 값을 가져와서 별점으로 표시
+      const rating = parseInt(getCookie('rating'));
       let stars = '';
       for (let i = 0; i < rating; i++) {
           stars += '&#9733;'; // 별 이모티콘
       }
-    
       document.querySelector(".star-rating").innerHTML = `${stars}`;
-
-</script>
+  
+      function getCookie(cname) {
+          var name = cname + "=";
+          var decodedCookie = decodeURIComponent(document.cookie);
+          var ca = decodedCookie.split(';');
+          for(var i = 0; i < ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                  return c.substring(name.length, c.length);
+              }
+          }
+          return "";
+      }
+    </script>
 </div>
-
-<div id="average-container" class="rating-average"></div>
-
-<script>
-    // 등급 평균을 가져옵니다.
-    fetch('/average')
-      .then((response) => response.json())
-      .then((data) => {
-        const averageElement = document.getElementById('average-container');
-        averageElement.innerText = data.average;
-        if (data.average > 5) {
-          averageElement.classList.add('high');
-        } else if (data.average < 5) {
-          averageElement.classList.add('low');
-        }
-      });
-  </script>
 
   <p class="asdf">제작자 : nh / sh
  </body>

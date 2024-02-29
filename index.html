@@ -256,7 +256,7 @@ html{
   <p class="break"></p>
 
   
-  <form id="ratingForm" name="rating" method="get" action="rating.html" action="/submit-rating">
+  <form id="ratingForm" name="rating" method="get" action="rating.html">
 
     <div class="star-rating">
       <input type="radio" id="5-stars" name="rating" value="5" />
@@ -278,48 +278,31 @@ html{
           <input type='submit' value='전송'>
         </div>
     </div>
-    
-    
-    <script>
-        function setCookie(cname, cvalue) {
-          const d = new Date();
-          d.setHours(0, 0, 0, 0);
-          d.setDate(d.getDate() + 1);
-          let expires = "expires="+ d.toUTCString();
-          document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
-  
-        document.addEventListener("DOMContentLoaded", function() {
-          const savedRating = getCookie("rating");
-          if (savedRating) {
-            document.querySelector('input[name="rating"][value="' + savedRating + '"]').checked = true;
-            setTimeout(function() {
-              document.querySelector("form").submit();
-            }, 1);
-          }
-        });
-  
-        document.querySelector("form").addEventListener("submit", function(event) {
-          const ratingValue = document.querySelector('input[name="rating"]:checked').value;
-          setCookie("rating", ratingValue);
-        });
-  
-        function getCookie(cname) {
-          let name = cname + "=";
-          let decodedCookie = decodeURIComponent(document.cookie);
-          let ca = decodedCookie.split(';');
-          for(let i = 0; i <ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-              c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-              return c.substring(name.length, c.length);
-            }
-          }
-          return "";
-        }
-      </script>
+  </form>
+
+  <script>
+    // 쿠키에 rating 값 저장
+    function setCookie(cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+      var expires = "expires="+d.toUTCString();
+      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    // 전송 버튼 클릭 시 평가 값 저장
+    document.querySelector('.button').addEventListener('click', function() {
+      var rating = document.querySelector('input[name="rating"]:checked').value;
+      setCookie('rating', rating, 365); // 쿠키에 rating 값 저장 (유효기간: 365일)
+    });
+
+    // 페이지 로드 시 rating 값 확인하여 rating.html로 이동
+    window.onload = function() {
+      var rating = document.cookie.replace(/(?:(?:^|.*;\s*)rating\s*=\s*([^;]*).*$)|^.*$/, "$1");
+      if (rating !== "") {
+        window.location.href = 'rating.html'; // rating.html 페이지로 이동
+      }
+    };
+  </script>
 
   <p class="asdf">제작자 : nh / sh
  </body>
