@@ -214,30 +214,23 @@ html{
 </style>
 
 <style>
-    .average {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Noto Sans KR", sans-serif;
-      font-size: 20px; /* 여기에서 font-size 값을 변경 */
-      justify-content: center;
+    .rating-average {
+      font-size: 24px;
+      color: #333;
+    }
+    .rating-average.high {
+      color: green;
+    }
+    .rating-average.low {
+      color: red;
     }
   </style>
 
 <div id="averageRating"></div>
 
  </head>  
- 
- <script>
-    // jQuery를 사용하여 average.js 스크립트를 비동기적으로 로드합니다.
-    $.getScript('average.js', function() {
-      // average.js에서 정의한 전역 변수에서 평균 평가 값을 검색합니다.
-      const averageRating = average;
-      
-      // #averageRating 요소에 평균 평가 값을 표시합니다.
-      $('#averageRating').text(`평균 평가: ${averageRating}`);
-    });
-  </script>
+
+ <script src="/server.js"></script>
 
  <body> 
   <h1 class="title">
@@ -266,7 +259,22 @@ html{
 </script>
 </div>
 
-<h2 id="averageRating"></h2>
+<div id="average-container" class="rating-average"></div>
+
+<script>
+    // 등급 평균을 가져옵니다.
+    fetch('/average')
+      .then((response) => response.json())
+      .then((data) => {
+        const averageElement = document.getElementById('average-container');
+        averageElement.innerText = data.average;
+        if (data.average > 5) {
+          averageElement.classList.add('high');
+        } else if (data.average < 5) {
+          averageElement.classList.add('low');
+        }
+      });
+  </script>
 
   <p class="asdf">제작자 : nh / sh
  </body>
