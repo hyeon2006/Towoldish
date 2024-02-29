@@ -272,23 +272,23 @@ resetCookieAtMidnight();
 
 // 서버로 데이터를 전송하는 함수
 function sendDataToServer(data) {
-    fetch('/addRating', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ rating: data })
-    })
-    .then(response => {
-        if (response.ok) {
-            console.log('평가가 서버에 전송되었습니다.');
-        } else {
-            console.error('서버에 데이터를 전송하는 중 오류가 발생했습니다.');
-        }
-    })
-    .catch(error => {
-        console.error('네트워크 오류:', error);
-    });
+  fetch('/addRating', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ rating: data })
+})
+.then(response => {
+    if (response.ok) {
+        console.log('평가가 서버에 전송되었습니다.');
+    } else {
+        console.error('서버에 데이터를 전송하는 중 오류가 발생했습니다.');
+    }
+})
+.catch(error => {
+    console.error('네트워크 오류:', error);
+});
 }
 
 // 서버로 데이터 전송
