@@ -219,7 +219,7 @@ html{
   <div class="star-rating">
     <script>
       // 쿠키에서 rating 값을 가져와서 별점으로 표시
-      const rating = parseInt(getCookie('rating'));
+      const rating = localStorage.getItem('rating');
       let stars = '';
       for (let i = 0; i < rating; i++) {
           stars += '&#9733;'; // 별 이모티콘
@@ -228,23 +228,6 @@ html{
   
      </script>
      </div>
-<div>
-        <script>
-            // PHP 파일에서 생성된 JSON 데이터를 파싱합니다.
-            var ratings = JSON.parse('<?php echo $json; ?>');
-        
-            // 평균 등급 값을 계산하여 표시합니다.
-            var ratingsDiv = document.getElementById('averageRating');
-            var sum = 0;
-            for (var i = 0; i < ratings.length; i++) {
-                sum += ratings[i];
-            }
-            var avg = sum / ratings.length;
-            ratingsDiv.innerHTML = avg;
-        </script>
-</div>
-
-<div id="averageRating"></div>
 
   <p class="asdf">제작자 : nh / sh
  </body>
