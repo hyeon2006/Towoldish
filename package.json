@@ -1,13 +1,19 @@
 {
   "name": "towoldish",
   "version": "1.0.0",
-  "type": "commonjs" ,
   "description": "편하고 간편한 급식 확인을 위해 만든\r 토월고 급식정보확인 사이트 입니다.",
-  "main": "script.js",
+  "type" : "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.23.3",
+    "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }

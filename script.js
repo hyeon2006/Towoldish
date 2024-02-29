@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 let ratings = [];
 
 // 클라이언트로부터 평가 값을 받아 배열에 추가
-app.post('/addRating', (req, res) => {
+app.post('script.js', (req, res) => {
     const { rating } = req.body;
     ratings.push(rating);
     res.send('평가가 성공적으로 추가되었습니다.');
