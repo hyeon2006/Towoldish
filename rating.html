@@ -201,7 +201,45 @@ html{
     }
   </style>
 
-<div id="averageRating"></div>
+<script>
+
+var ratingValue = document.getElementById("ratingForm").value;
+
+var xhr = new XMLHttpRequest();
+var url = "addRating.php";
+var params = "rating=" + ratingValue;
+xhr.open("POST", url, true);
+
+// 헤더 설정
+xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+xhr.onreadystatechange = function() {
+    if (xhr.readyState == 4 && xhr.status == 200) {
+        console.log(xhr.responseText);
+    }
+}
+
+xhr.send(params);
+
+</script>
+
+<script>
+    // 데이터를 가져와서 표시할 요소를 선택합니다
+    const ratingList = document.getElementById('ratingList');
+    
+    // 데이터를 가져오는 함수
+    fetch('addRating.php')
+        .then(response => response.json())
+        .then(data => {
+            // 데이터를 받아와서 리스트 아이템으로 추가합니다
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item.value;
+                ratingList.appendChild(li);
+            });
+        })
+        .catch(error => console.error('데이터를 가져오는 중 오류가 발생했습니다:', error));
+    </script>
 
  </head>  
 
@@ -243,6 +281,8 @@ html{
         }
       </script>
      </div>
+
+     <ul id="ratingList"></ul>
 
   <p class="asdf">제작자 : nh / sh
  </body>
