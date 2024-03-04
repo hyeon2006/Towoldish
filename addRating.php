@@ -13,6 +13,22 @@ if ($conn->connect_error) {
     die("연결 실패: " . $conn->connect_error);
 }
 
+// 매일 자정에 실행되는 작업을 확인
+$current_time = time();
+$midnight_time = strtotime('today midnight');
+
+if ($current_time >= $midnight_time) {
+    // 쿼리 작성 및 실행 (데이터 삭제)
+    $sql = "DELETE FROM ratings";
+    if ($conn->query($sql) === TRUE) {
+        echo "데이터가 초기화되었습니다.";
+    } else {
+        echo "데이터 초기화 중 오류가 발생했습니다: " . $conn->error;
+    }
+} else {
+    echo "지금은 초기화 시간이 아닙니다.";
+}
+
 // 쿼리 작성 및 실행
 $sql = "SELECT value FROM ratings";
 $result = $conn->query($sql);
