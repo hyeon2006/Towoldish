@@ -206,7 +206,7 @@ html{
 // 페이지 로드 시 rating 값 확인하여 index.html로 이동
     window.onload = function() {
       var rating = document.cookie.replace(/(?:(?:^|.*;\s*)rating\s*=\s*([^;]*).*$)|^.*$/, "$1");
-      if (rating !== "") {
+      if (rating == "") {
         window.location.href = 'index.html'; // index.html 페이지로 이동
       }
     };
