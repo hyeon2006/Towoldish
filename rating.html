@@ -216,7 +216,7 @@ html{
   
 <script>
 
-var ratingValue = document.getElementById("ratingForm").value;
+var ratingValue = parseInt(getCookie('rating'));
 
 var xhr = new XMLHttpRequest();
 var url = "addRating.php";
