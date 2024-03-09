@@ -292,7 +292,7 @@ html{
     // 전송 버튼 클릭 시 평가 값 저장
     document.querySelector('.button').addEventListener('click', function() {
       var rating = document.querySelector('input[name="rating"]:checked').value;
-      setCookie('rating', rating, 1); // 쿠키에 rating 값 저장 (유효기간: 365일)
+      setCookie('rating', rating, 1); // 쿠키에 rating 값 저장 (유효기간: 1일)
     });
 
     // 페이지 로드 시 rating 값 확인하여 rating.html로 이동
