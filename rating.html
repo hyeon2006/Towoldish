@@ -188,19 +188,6 @@ html{
 
 </style>
 
-<style>
-    .rating-average {
-      font-size: 24px;
-      color: #333;
-    }
-    .rating-average.high {
-      color: green;
-    }
-    .rating-average.low {
-      color: red;
-    }
-  </style>
-
 
 <script>
 // 페이지 로드 시 rating 값 확인하여 index.html로 이동
@@ -212,46 +199,7 @@ html{
     };
  </script>
 
-
-  
-<script>
-
-var ratingValue = parseInt(getCookie('rating'));
-
-var xhr = new XMLHttpRequest();
-var url = "addRating.php";
-var params = "rating=" + ratingValue;
-xhr.open("POST", url, true);
-</script>
-
-<script>
- const ratingList = document.getElementById('ratingList');
-const statDisplay = document.getElementById('statDisplay');
-
-// 데이터를 가져오는 함수
-fetch('addRating.php')
-    .then(response => response.json())
-    .then(data => {
-        // 데이터를 받아와서 리스트 아이템으로 추가합니다
-        data.forEach(item => {
-            const li = document.createElement('li');
-            li.textContent = item.value;
-            ratingList.appendChild(li);
-        });
-
-        // 통계 계산
-        const values = data.map(item => item.value);
-        const sum = values.reduce((acc, curr) => acc + curr, 0);
-        const average = sum / values.length;
-
-        // 통계를 HTML에 표시
-        statDisplay.innerHTML = `
-            <p>총합: ${sum}</p>
-            <p>평균: ${average.toFixed(2)}</p>
-        `;
-    })
-    .catch(error => console.error('데이터를 가져오는 중 오류가 발생했습니다:', error));
-    </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
  </head>  
 
@@ -294,7 +242,33 @@ fetch('addRating.php')
       </script>
      </div>
 
-     <ul id="statDisplay"></ul>
+     <h1>평균 평점: <span id="average"></span></h1>
+
+    <script>
+      const ONE_DAY_MS = 24 * 60 * 60 * 1000; // 하루를 나타내는 시간(ms)
+
+      // 이전 요청의 시간을 저장할 변수
+      let lastRequestTime = 0;
+
+      function getAverage() {
+        const currentTime = new Date().getTime();
+
+        // 이전 요청과 적절한 시간 간격이 있었는지 확인합니다.
+        if (currentTime - lastRequestTime < ONE_DAY_MS) {
+          console.log("요청 간격이 너무 짧습니다.");
+          return;
+        }
+
+        lastRequestTime = currentTime;
+
+        $.get("/getAverage", data => {
+          $("#average").text(data.average);
+        });
+      }
+
+      getAverage();
+      setInterval(getAverage, 5000); // 5초마다 평균 값을 업데이트합니다.
+    </script>
 
   <p class="asdf">제작자 : nh / sh
  </body>
