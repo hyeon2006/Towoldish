@@ -240,35 +240,28 @@ html{
             return "";
         }
       </script>
+
+<script>
+fetch('/sendRating', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ rating })
+})
+.then(response => {
+    if (response.ok) {
+        console.log('Rating sent successfully');
+    } else {
+        console.error('Failed to send rating');
+    }
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+</script>
+
      </div>
-
-     <h1>평균 평점: <span id="average"></span></h1>
-
-    <script>
-      const ONE_DAY_MS = 24 * 60 * 60 * 1000; // 하루를 나타내는 시간(ms)
-
-      // 이전 요청의 시간을 저장할 변수
-      let lastRequestTime = 0;
-
-      function getAverage() {
-        const currentTime = new Date().getTime();
-
-        // 이전 요청과 적절한 시간 간격이 있었는지 확인합니다.
-        if (currentTime - lastRequestTime < ONE_DAY_MS) {
-          console.log("요청 간격이 너무 짧습니다.");
-          return;
-        }
-
-        lastRequestTime = currentTime;
-
-        $.get("/getAverage", data => {
-          $("#average").text(data.average);
-        });
-      }
-
-      getAverage();
-      setInterval(getAverage, 5000); // 5초마다 평균 값을 업데이트합니다.
-    </script>
 
   <p class="asdf">제작자 : nh / sh
  </body>
