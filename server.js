@@ -14,6 +14,12 @@ app.post('/sendRating', (req, res) => {
     res.sendStatus(200);
 });
 
+const result = serverData.reduce(function add(sum, currValue) {
+  return sum + currValue;
+}, 0);
+
+const average = result / arr.length;
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
