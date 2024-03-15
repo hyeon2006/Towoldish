@@ -255,55 +255,6 @@ html{
     석식</h1> 
   <p class="break"></p>
 
-  
-  <form id="ratingForm" name="rating" action="rating.html">
-
-    <div class="star-rating">
-      <input type="radio" id="5-stars" name="rating" value="5" />
-      <label for="5-stars" class="star">&#9733;</label>
-      <input type="radio" id="4-stars" name="rating" value="4" />
-      <label for="4-stars" class="star">&#9733;</label>
-      <input type="radio" id="3-stars" name="rating" value="3" />
-      <label for="3-stars" class="star">&#9733;</label>
-      <input type="radio" id="2-stars" name="rating" value="2" />
-      <label for="2-stars" class="star">&#9733;</label>
-      <input type="radio" id="1-star" name="rating" value="1" />
-      <label for="1-star" class="star">&#9733;</label>
-     
-    </div>
-    
-    
-    <div class="container">
-        <div class="button">
-          <input type='submit' value='평가'>
-        </div>
-    </div>
-  </form>
-
-  <script>
-    // 쿠키에 rating 값 저장
-    function setCookie(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-      var expires = "expires="+d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    // 전송 버튼 클릭 시 평가 값 저장
-    document.querySelector('.button').addEventListener('click', function() {
-      var rating = document.querySelector('input[name="rating"]:checked').value;
-      setCookie('rating', rating, 1); // 쿠키에 rating 값 저장 (유효기간: 1일)
-    });
-
-    // 페이지 로드 시 rating 값 확인하여 rating.html로 이동
-    window.onload = function() {
-      var rating = document.cookie.replace(/(?:(?:^|.*;\s*)rating\s*=\s*([^;]*).*$)|^.*$/, "$1");
-      if (rating !== "") {
-        window.location.href = 'rating.html'; // rating.html 페이지로 이동
-      }
-    };
-  </script>
-
 
 
   <p class="asdf">제작자 : nh / sh
