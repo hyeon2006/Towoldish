@@ -1,266 +1,41 @@
 <!doctype html>
 <html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <title>토월고등학교 급식</title>
-    <link rel="canonical" href="towol.n-e.kr">
-    <script>
-        $(function () {
-            $KEY = "376c66873c3845a485f42bc79baa29ce"
-            $t = new Date();
-            $tyear = $t.getFullYear()
-            $tmonth = $t.getMonth() + 1;
-            $tdate = $t.getDate();
-            if ($tmonth < 10) {
-                $tmonth = "0" + $tmonth;
-            }
+        <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
-            if ($tdate < 10) {
-                $tdate = "0" + $tdate;
-            }
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-            $today = $tyear + $tmonth + $tdate;
-            $.ajax({
-                url: "https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=" + $KEY + "&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&SD_SCHUL_CODE=9010319&MLSV_YMD=" + $today,
-                type: "GET",
-                dataType: "json",
-                success: function (data) {
-                    $(".YMD").append($tyear + "년 " + $tmonth + "월 " + $tdate + "일 ");
-                    try {
-                        $meal = data.mealServiceDietInfo[1].row[0].DDISH_NM;
-                        $(".meal").append($meal);
-                    }
-                    catch (e) {
-                        $meal = "오늘은 쉬는 날 입니다.";
-                        $(".meal").append($meal);
-                        $(".meal").css({
-                            "font-size": "20px",
-                            "font-family": "Orbit",
-                            "font-weight": "900",
-                            "font-style": "normal",
-                            "text-align": "center",
-                        });
-                    }
+        <meta name="theme-color" content="#bae6fd" />
 
-                },
-                error: function () {
-                    console.log("error");
-                }
-            })
-            $.ajax({
-                url: "https://open.neis.go.kr/hub/mealServiceDietInfo?Type=json&KEY=" + $KEY + "&pIndex=1&pSize=100&ATPT_OFCDC_SC_CODE=S10&MMEAL_SC_CODE=3&SD_SCHUL_CODE=9010319&MLSV_YMD=" + $today,
-                type: "GET",
-                dataType: "json",
-                success: function (data) {
-                    try {
-                        $break = data.mealServiceDietInfo[1].row[0].DDISH_NM;
-                        $(".break").append($break);
-                    }
-                    catch (e) {
-                        $break = "오늘은 석식을 제공하지 않습니다.";
-                        $(".break").append($break);
-                        $(".break").css({
-                            "font-size": "20px",
-                            "font-family": "Orbit",
-                            "font-weight": "900",
-                            "font-style": "normal",
-                            "text-align": "center",
-                        });
-                    }
+        <title>토월급식 - 오늘의 맛있는 메뉴</title>
+        <meta
+            name="description"
+            content="토월고등학교의 오늘 점심, 석식 메뉴를 확인해보세요! (알레르기 정보 포함)"
+        />
 
-                },
-                error: function () {
-                    console.log("error");
-                }
-            })
-        });
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="토월급식 🍚" />
+        <meta
+            property="og:description"
+            content="오늘 급식 뭐 나오지? 여기서 바로 확인하세요! (좋아요 기능 추가)"
+        />
+        <meta property="og:site_name" content="토월급식" />
+        <meta property="og:locale" content="ko_KR" />
 
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Gasoek+One&family=Hahmlet:wght@100..900&display=swap');
+        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
 
-        html {
-            background-color: rgb(255, 255, 255);
-        }
-
-        .title {
-            text-align: center;
-            font-size: 50px;
-            font-family: "Gasoek One", sans-serif;
-            font-weight: lighter;
-            font-style: normal;
-        }
-
-        .YMD {
-            text-align: center;
-            font-family: "Gasoek One", sans-serif;
-            font-weight: 100;
-            font-style: chrome;
-            font-size: 30px;
-        }
-
-        .Bob {
-            text-align: center;
-        }
-    </style>
-
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Orbit&display=swap');
-
-        .meal {
-            font-size: 20px;
-            text-align: center;
-            margin: auto;
-            padding: auto;
-            width: auto;
-            height: auto;
-            background-color: rgb(178, 218, 247);
-            font-family: "Orbit", sans-serif;
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        .break {
-            font-size: 20px;
-            text-align: center;
-            margin: auto;
-            padding-bottom: 20px;
-            width: auto;
-            height: auto;
-            border-radius: 0px 0px 20px 20px / 0px 0px 20px 20px;
-            background-color: rgb(178, 218, 247);
-            font-family: "Orbit", sans-serif;
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        .sub1 {
-            font-size: 25px;
-            text-align: center;
-            margin: auto;
-            padding-top: 20px;
-            border-radius: 20px 20px 0px 0px / 20px 20px 0px 0px;
-            width: auto;
-            height: auto;
-            background-color: rgb(178, 218, 247);
-            font-family: "Orbit", sans-serif;
-            font-weight: 900;
-            font-style: normal;
-        }
-
-        .sub2 {
-            font-size: 25px;
-            text-align: center;
-            margin: auto;
-            padding-top: 20px;
-            width: auto;
-            height: auto;
-            background-color: rgb(178, 218, 247);
-            font-family: "Orbit", sans-serif;
-            font-weight: 900;
-            font-style: normal;
-        }
-
-        .asdf {
-            text-align: left;
-            font-size: 8px;
-            font-family: "Orbit", sans-serif;
-            font-weight: 900;
-            font-style: normal;
-        }
-    </style>
-
-    <style>
-        .star-rating {
-            display: flex;
-            flex-direction: row-reverse;
-            font-size: 1.5em;
-            justify-content: space-around;
-            padding: 0 .2em;
-            text-align: center;
-            width: 5em;
-            margin: auto;
-        }
-
-        .star-rating input {
-            display: none;
-            text-align: center;
-        }
-
-        .star-rating label {
-            color: #ccc;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .star-rating :checked~label {
-            color: #f90;
-            text-align: center;
-        }
-
-        .star-rating label:hover,
-        .star-rating label:hover~label {
-            color: #fc0;
-            text-align: center;
-        }
-
-        .container {
-            display: flex;
-            justify-content: center;
-        }
-
-        .button {
-            display: inline-block;
-            padding: 10px 15px;
-            margin: 10px 0;
-            border-radius: 50px;
-            background-color: #add8e6;
-            color: #000;
-            font-family: "Noto Sans KR", sans-serif;
-            font-size: 20px;
-            font-weight: bold;
-            text-align: center;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: #87ceeb;
-        }
-
-        .button input[type="submit"] {
-            border: none;
-            background-color: transparent;
-            color: inherit;
-            font-size: inherit;
-            cursor: pointer;
-        }
-    </style>
-
-    <meta name="description" content="토월고 급식 정보 사이트">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="토월고등학교 급식">
-    <meta property="og:description" content="토월고 급식 정보 사이트">
-    <meta property="og:image" content="Bob.png">
-    <meta property="og:url" content="towol.n-e.kr">
-</head>
-
-<body>
-    <h1 class="title">
-        <img src=Bob.png alt="rice" weight=75 height=75 text-align=center> 토월급식</토월고>
-    </h1>
-    <h1 class="YMD"></h1>
-    <h1 class="sub1">
-        중식</h1>
-    <p class="meal"></p>
-    <h1 class="sub2">
-        석식</h1>
-    <p class="break"></p>
-    <p class="asdf">제작자 : nh / sh
-</body>
-
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="토월급식 🍚" />
+        <meta name="twitter:description" content="오늘의 토월고 급식 메뉴를 확인하세요." />
+        <meta name="twitter:image" content="/og-image.png" />
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.jsx"></script>
+    </body>
 </html>
